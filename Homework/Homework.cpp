@@ -11,13 +11,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	if (err){
 		cout << "Wrong input!\nCode: " << err << "\n";
 		matrix.Write("output.txt");
+		system("pause");
 		return 0;
 	}
+	matrix.Rebuilder();
 	matrix.Pathfinder();
 	if (!matrix.Write("output.txt")){
 		cout << "Uncorrect output!\n";
 	}
-
+	system("pause");
 	return 0;
 }
 

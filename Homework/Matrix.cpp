@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Matrix.h"
-
+#define INF 9000000
 
 Matrix::Matrix()
 {
@@ -109,7 +109,7 @@ int Matrix::Read(char* filename)
 
 				if (i == n && (cur < 0 || cur >= animnum)){
 					n = 0;
-					return 5;//Номер(имя животного) =0
+					return 5;//Кол-во животных в animals и input не совпадает
 				}
 				else names[j] = (int)cur;
 
@@ -151,7 +151,30 @@ int Matrix::Write(char* filename)
 	outfile.close();
 	return 0;// закрыто с ошибкой
 }
+int Matrix::Rebuilder(){
+	MP = new int*[n];
+	for (int i = 0; i < n; i++) MP[i] = new int[n];
+	for (int i = 0; i < n; ++i)
+	for (int j = 0; j < n; ++j){
+		MP[i][j] = j;
+	}
+	for (int k = 0; k < n; ++k)
+	for (int i = 0; i < n; ++i)
+	for (int j = 0; j < n; ++j)
+	if (arr[i][k] < INF && arr[k][j] < INF)
+	if (arr[i][k] + arr[k][j] < arr[i][j]){ arr[i][j] = arr[i][k] + arr[k][j]; MP[i][j] = MP[i][k]; }
+	/*cout << "\n";
+	for (int i = 0; i < n; ++i){
+		for (int j=0; j < n; ++j){ std::cout << arr[i][j] << " "; }
+		std::cout << "\n";
 
+	}std::cout << "\n";
+	for (int i=0; i < n; ++i){
+		for (int j=0; j < n; ++j){ std::cout << MP[i][j] << " "; }
+		std::cout << "\n";
+	}*/
+	return 1;
+}
 int Matrix::Pathfinder(){
 	path = new int[n];
 	for (int i = 0; i < n; i++){

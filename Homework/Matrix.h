@@ -4,9 +4,9 @@ class Matrix
 {
 private:
 	int** arr;
+	int** MP;
 	int* names;
 	double* chances;
-	int* exist;
 	int* scores;
 	int n;
 	Animal* animals;
@@ -17,5 +17,6 @@ public:
 	int Read(char* file);
 	int Write(char* file);
 	int Pathfinder();
+	int Rebuilder();
 	~Matrix();
 };
