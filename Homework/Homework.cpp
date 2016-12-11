@@ -16,9 +16,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 	matrix.Rebuilder();
 	matrix.Greedy();
-	/*if (!matrix.Write("output.txt")){
+	if (!matrix.Write("output.txt")){
 		cout << "Uncorrect output!\n";
-	}*/
+	}
 	system("pause");
 	return 0;
 }

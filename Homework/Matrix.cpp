@@ -85,7 +85,7 @@ int Matrix::Read(char* filename)
 		arr = new int*[n];
 		names = new int[n];
 		double cur;
-		for (int i = 0; i < n + str; i++) arr[i] = new int[n];
+		for (int i = 0; i < n; i++) arr[i] = new int[n];
 		for (int i = 0; i < n + str; i++){
 			for (int j = 0; j < n; j++){
 				cur = 0;
@@ -99,24 +99,27 @@ int Matrix::Read(char* filename)
 					n = 0;
 					return 3;//ѕуть между животными =0
 				}
-				else arr[i][j] = (int)cur;
 
 				if (i == j && cur != 0){
 					n = 0;
 					return 4;//Ќа главной диагонали присутствует число, отличное от 0 (путь от животного к самому себе !=0)
 				}
-				else arr[i][j] = (int)cur;
+				else{
+					if (i < n) arr[i][j] = (int)cur;
+					}
 
 				if (i == n && (cur < 0 || cur >= animnum)){
 					n = 0;
 					return 5;// ол-во животных в animals и input не совпадает
 				}
-				else names[j] = (int)cur;
+				else{
+					if (i == n) names[j] = (int)cur;
+				}
 
-				cout << cur << " ";
+				//cout << cur << " ";
 				tmp.pop();
 			}
-			cout << "\n";
+			//cout << "\n";
 		}
 	}
 	infile.close();
@@ -128,8 +131,8 @@ int Matrix::Write(char* filename)
 	ofstream outfile(filename, ios_base::trunc);
 	int* test;
 	if (n > 0 && path != 0){//n==0, файл очищаетс€
-		test = new int[n];
-		for (int i = 0; i < n; i++){
+		test = new int[animnum];
+		for (int i = 0; i < animnum; i++){
 			test[i] = 0;
 		}
 		for (int i = 0; i < n; i++){
