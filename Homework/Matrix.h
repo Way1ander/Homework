@@ -12,11 +12,12 @@ private:
 	Animal* animals;
 	int animnum;
 	int* path = 0;
+	const int inf = 10000;
 public:
 	Matrix();
 	int Read(char* file);
 	int Write(char* file);
-	int Pathfinder();
 	int Rebuilder();
+	int Greedy();
 	~Matrix();
 };

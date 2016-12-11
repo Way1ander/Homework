@@ -14,8 +14,9 @@
 #include <math.h>
 #include "Animal.h"
 #include "Matrix.h"
+#include <algorithm>
 
 using namespace std;
-
+bool get(int nmb, int x);
 
 // TODO: Установите здесь ссылки на дополнительные заголовки, требующиеся для программы

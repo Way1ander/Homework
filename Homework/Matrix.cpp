@@ -163,7 +163,7 @@ int Matrix::Rebuilder(){
 	for (int j = 0; j < n; ++j)
 	if (arr[i][k] < INF && arr[k][j] < INF)
 	if (arr[i][k] + arr[k][j] < arr[i][j]){ arr[i][j] = arr[i][k] + arr[k][j]; MP[i][j] = MP[i][k]; }
-	/*cout << "\n";
+	cout << "\n";
 	for (int i = 0; i < n; ++i){
 		for (int j=0; j < n; ++j){ std::cout << arr[i][j] << " "; }
 		std::cout << "\n";
@@ -172,27 +172,56 @@ int Matrix::Rebuilder(){
 	for (int i=0; i < n; ++i){
 		for (int j=0; j < n; ++j){ std::cout << MP[i][j] << " "; }
 		std::cout << "\n";
-	}*/
+	}
 	return 1;
 }
-int Matrix::Pathfinder(){
+
+int Matrix::Greedy(){
 	path = new int[n];
-	for (int i = 0; i < n; i++){
-		path[i] = i;
-	}
-	int bub = 0;
-	for (int i = 0; i < n - 1; i++){
-		for (int j = i + 1; j < n; j++){
-			if (names[path[i]]>names[path[j]]){
-				bub = path[i];
-				path[i] = path[j];
-				path[j] = bub;
+	path[0] = 0;
+	int  i, j, k, m, temp, ans;
+	int f, q = n, v, w, e;
+	m = 1 << n; w = m;
+	int** t = new int*[m];
+	for (int i = 0; i < m; i++){ t[i] = new int[n];
+}
+	t[1][0] = 0; 
+	for (i = 1; i<m; i += 2)
+	for (j = (i == 1) ? 1 : 0; j<n; ++j)
+	{
+		t[i][j] = inf;
+		if (j>0 && get(j, i))
+		{
+			temp = i ^ (1 << j);
+			for (k = 0; k<n; ++k)
+			if (get(k, i) && arr[k][j]>0){
+				t[i][j] = min(t[i][j], t[temp][k] + arr[k][j]);
 			}
 		}
 	}
-	
-	return 1;//Алгоритм выдал путь
+	for (j = 1, ans = inf; j<n; ++j)
+	if (arr[j][0]>0){
+		if (ans > t[m - 1][j] + arr[j][0]) {
+			ans = t[m - 1][j] + arr[j][0];
+			e = j; path[q] = j; f = t[m - 1][j];
+		}
+	}
+	while (w>1){
+		v = w - pow(2, e);
+		f = t[v - 1][e];
+		for (k = 0; k < n; ++k){
+			if (t[w - 1][e] == t[v - 1][k] + arr[k][e] && t[w - 1][e] < f) {
+				f = t[w - 1][e]; path[q - 1] = e; e = k;
+			}
+		}
+		w = v;
+		q--;
+	}
+		for (int j = 0; j < n; ++j){ std::cout << path[j] << "->"; }
+		if (ans == inf) return 0;
+		else return 1;
 }
+
 
 Matrix::~Matrix()
 {

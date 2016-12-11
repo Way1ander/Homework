@@ -15,10 +15,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		return 0;
 	}
 	matrix.Rebuilder();
-	matrix.Pathfinder();
-	if (!matrix.Write("output.txt")){
+	matrix.Greedy();
+	/*if (!matrix.Write("output.txt")){
 		cout << "Uncorrect output!\n";
-	}
+	}*/
 	system("pause");
 	return 0;
 }
